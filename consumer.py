@@ -10,6 +10,7 @@ DB_CONFIG = {
     "password": "solarwatch",
 }
 
+
 def setup_database():
     conn = psycopg2.connect(**DB_CONFIG)
     cur = conn.cursor()
@@ -25,6 +26,7 @@ def setup_database():
     conn.commit()
     return conn, cur
 
+
 conn, cur = setup_database()
 print("Connected to database. Waiting for telemetry...")
 
@@ -36,6 +38,7 @@ def on_message(client, userdata, msg):
     )
     conn.commit()
     print(f"Saved reading from {reading['device_id']}")
+
 
 client = mqtt.Client()
 client.on_message = on_message
