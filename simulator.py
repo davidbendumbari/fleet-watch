@@ -12,6 +12,7 @@ NUM_WIND = 20
 client = mqtt.Client()
 client.connect(BROKER, PORT, 60)
 
+
 def generate_solar_reading(device_id):
     return {
         "device_id": f"solar-{device_id}",
@@ -22,6 +23,7 @@ def generate_solar_reading(device_id):
         "output_kw": round(random.uniform(0, 5), 2),
     }
 
+
 def generate_wind_reading(device_id):
     return {
         "device_id": f"wind-{device_id}",
@@ -31,6 +33,7 @@ def generate_wind_reading(device_id):
         "wind_speed_ms": round(random.uniform(2, 20), 1),
         "output_kw": round(random.uniform(0, 10), 2),
     }
+
 
 print("Fleet simulator started. Publishing telemetry every 3 seconds...")
 while True:

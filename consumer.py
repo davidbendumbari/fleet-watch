@@ -30,6 +30,7 @@ def setup_database():
 conn, cur = setup_database()
 print("Connected to database. Waiting for telemetry...")
 
+
 def on_message(client, userdata, msg):
     reading = json.loads(msg.payload.decode())
     cur.execute(
