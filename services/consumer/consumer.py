@@ -1,9 +1,10 @@
 import json
 import psycopg2
 import paho.mqtt.client as mqtt
+import os
 
 DB_CONFIG = {
-    "host": "localhost",
+    "host": os.environ.get("DB_HOST", "localhost"),
     "port": 5432,
     "dbname": "solarwatch",
     "user": "postgres",
@@ -43,6 +44,6 @@ def on_message(client, userdata, msg):
 
 client = mqtt.Client()
 client.on_message = on_message
-client.connect("localhost", 1883, 60)
+client.connect(os.environ.get("MQTT_BROKER_HOST", "localhost"), 1883, 60)
 client.subscribe("fleet/telemetry")
 client.loop_forever()

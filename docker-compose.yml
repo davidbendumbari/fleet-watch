@@ -1,4 +1,4 @@
-version: "3.8"
+name: fleet-watch
 services:
   mqtt-broker:
     image: eclipse-mosquitto:2
@@ -16,6 +16,26 @@ services:
       POSTGRES_DB: solarwatch
     volumes:
       - timescale-data:/var/lib/postgresql/data
+
+  simulator:
+    build:
+      context: .
+      dockerfile: services/simulator/Dockerfile
+    depends_on:
+      - mqtt-broker
+    environment:
+      MQTT_BROKER_HOST: mqtt-broker
+
+  consumer:
+    build:
+      context: .
+      dockerfile: services/consumer/Dockerfile
+    depends_on:
+      - mqtt-broker
+      - timescaledb
+    environment:
+      MQTT_BROKER_HOST: mqtt-broker
+      DB_HOST: timescaledb
 
 volumes:
   timescale-data:
