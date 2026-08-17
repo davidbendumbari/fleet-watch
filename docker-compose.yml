@@ -48,5 +48,16 @@ services:
     ports:
       - "8000:8000"
 
+  dashboard:
+    build:
+      context: .
+      dockerfile: services/dashboard/Dockerfile
+    depends_on:
+      - api
+    environment:
+      VITE_API_URL: http://localhost:8000
+    ports:
+      - "5173:5173"
+
 volumes:
   timescale-data:
