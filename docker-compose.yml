@@ -37,5 +37,16 @@ services:
       MQTT_BROKER_HOST: mqtt-broker
       DB_HOST: timescaledb
 
+  api:
+    build:
+      context: .
+      dockerfile: services/api/Dockerfile
+    depends_on:
+      - timescaledb
+    environment:
+      DB_HOST: timescaledb
+    ports:
+      - "8000:8000"
+
 volumes:
   timescale-data:
